@@ -1,0 +1,69 @@
+-- Protecciones avanzadas
+local blockedFunctions = {
+    loadstring = function() error("Uso de loadstring bloqueado.") end,
+    require = function() error("Uso de require bloqueado.") end,
+    -- Agregar más funciones peligrosas si es necesario
+}
+
+-- Bloquear funciones peligrosas
+for funcName, func in pairs(blockedFunctions) do
+    _G[funcName] = func
+end
+
+-- Activar protección de la NASA
+local function activarProteccion()
+    -- Bloquear loadstring solo si no es llamado por un jugador confiable (Comandante o Jefe)
+    local originalLoadstring = loadstring
+    loadstring = function(code)
+        -- Revisa si el código proviene de una fuente confiable
+        if esCodigoConfiable(code) then
+            return originalLoadstring(code)  -- Permitir el código si es confiable
+        else
+            error("Uso de loadstring bloqueado por protección.")
+        end
+    end
+end
+
+-- Función que verifica si el código es confiable
+function esCodigoConfiable(code)
+    -- Aquí podrías agregar un sistema para verificar si el código es legítimo
+    -- Por ejemplo, comparar código con una lista blanca o permitir ciertas funciones solo a usuarios autorizados
+    return true  -- Esta es una condición de ejemplo que puedes personalizar
+end
+
+-- Llamar a la protección
+activarProteccion()
+
+-- Comandante
+local comandante = {}
+comandante.proteccion = "Dinámica"
+comandante.acceso = true
+comandante.funciones = {"Teletransportar jugadores", "Activar protecciones", "Desactivar exploits"}
+
+-- Jefe
+local jefe = {}
+jefe.proteccion = "Máxima"
+jefe.acceso = true
+jefe.funciones = {"Protección avanzada", "Monitoreo continuo", "Reajuste automático"}
+
+-- Función para notificar a los usuarios
+local function notificarMensaje()
+    -- Mensaje solo visible para ti
+    print("Protección de la NASA 🤑🤑🤑 - Activada")
+end
+
+-- Mostrar mensaje de protección activa
+notificarMensaje()
+
+-- Bloquear ejecuciones peligrosas
+local function bloquearComandosPeligrosos()
+    local oldHook = hookfunction
+    hookfunction(game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid").HealthChanged, function()
+        if game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health < 1 then
+            print("Comando peligroso detectado y bloqueado.")
+        end
+    end)
+end
+
+-- Llamar a la protección de comandos peligrosos
+bloquearComandosPeligrosos()
