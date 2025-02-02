@@ -1,0 +1,63 @@
+-- Definir las posiciones a las que te teletransportarás
+local targetPosition1 = Vector3.new(-4744.84423828125, 153.98550415039062, -4394.4404296875)  -- Primera posición
+local targetPosition2 = Vector3.new(-4724.11767578125, 197.00367736816406, -4555.0380859375)  -- Segunda posición
+
+-- Función de teletransportación continua con retraso
+local function teleportToPosition(position, delay)
+    -- Verifica si el jugador está en el juego y tiene un personaje válido
+    local player = game.Players.LocalPlayer
+    if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        -- Teletransportar al jugador a la posición indicada
+        player.Character.HumanoidRootPart.CFrame = CFrame.new(position)
+        
+        -- Esperar el retraso antes de proceder
+        wait(delay)
+    else
+        warn("No se pudo teletransportar: El personaje no está disponible.")
+    end
+end
+
+-- Anti-Detección Básico: Obfuscación simple para prevenir detección fácil
+local function antiDetection()
+    -- Genera una función con un nombre aleatorio para evitar detección simple
+    local function randomFunc()
+        return math.random() * math.random()
+    end
+    
+    -- Llamar la función aleatoria para hacer que el script parezca menos predecible
+    randomFunc()
+
+    -- Chequear si el entorno de ejecución está usando un exploit
+    local exploitDetected = false
+    if syn and syn.protect_gui then
+        exploitDetected = true
+    elseif is_synapse_function then
+        exploitDetected = true
+    elseif getrawmetatable then
+        exploitDetected = true
+    end
+
+    -- Si se detecta un exploit, ocultar los prints y tomar medidas de evasión
+    if exploitDetected then
+        warn("¡Exploit detectado! Se están tomando medidas de evasión.")
+        -- Aquí podrías agregar más medidas como auto-destrucción o bloquear funciones adicionales.
+        return
+    end
+end
+
+-- Función de protección adicional que se llama antes de la teletransportación
+local function runProtection()
+    antiDetection()  -- Llamamos a la función de anti-detección antes de teletransportar
+end
+
+-- Ejecutar la teletransportación y las protecciones
+runProtection()
+
+-- Ciclo continuo de teletransportación entre las dos posiciones
+while true do
+    -- Teletransportarse a la primera posición y esperar 0.5 segundos
+    teleportToPosition(targetPosition1, 0.5)
+
+    -- Teletransportarse a la segunda posición y esperar 0.5 segundos
+    teleportToPosition(targetPosition2, 0.5)
+end
