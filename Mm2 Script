@@ -1,0 +1,111 @@
+-- Variables para el panel y el botón de abrir/cerrar
+local ScreenGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local UICornerMain = Instance.new("UICorner")
+local ToggleButton = Instance.new("TextButton")
+local FirstButton = Instance.new("TextButton")
+local SecondButton = Instance.new("TextButton")
+local Title = Instance.new("TextLabel")
+local Credits = Instance.new("TextLabel")
+
+-- Protección para evitar detección
+if syn and syn.protect_gui then
+    syn.protect_gui(ScreenGui)
+end
+ScreenGui.Name = "AutoTeleportPanel"
+ScreenGui.Parent = game:GetService("CoreGui")
+
+-- Propiedades del Panel Principal
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = ScreenGui
+MainFrame.Size = UDim2.new(0, 200, 0, 220)
+MainFrame.Position = UDim2.new(0, -220, 0.5, -110)
+MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+
+UICornerMain.Parent = MainFrame
+UICornerMain.CornerRadius = UDim.new(0, 10)
+
+-- Título del Panel
+Title.Name = "Title"
+Title.Parent = MainFrame
+Title.Size = UDim2.new(1, 0, 0, 50)
+Title.BackgroundTransparency = 1
+Title.Text = "Mm2"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextSize = 16
+Title.Font = Enum.Font.SourceSansBold
+Title.Position = UDim2.new(0, 0, 0, 5)
+
+-- Primer Botón: Script Mm2
+FirstButton.Name = "FirstButton"
+FirstButton.Parent = MainFrame
+FirstButton.Size = UDim2.new(0.8, 0, 0, 40)
+FirstButton.Position = UDim2.new(0.1, 0, 0, 60)
+FirstButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+FirstButton.Text = "Script Mm2"
+FirstButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+FirstButton.Font = Enum.Font.SourceSansBold
+FirstButton.TextSize = 14
+
+local UICornerButton1 = Instance.new("UICorner")
+UICornerButton1.Parent = FirstButton
+UICornerButton1.CornerRadius = UDim.new(0, 10)
+
+FirstButton.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/mzkv/mm2/refs/heads/main/xHUB", true))()
+end)
+
+-- Segundo Botón: Trade SCAM Mm2
+SecondButton.Name = "SecondButton"
+SecondButton.Parent = MainFrame
+SecondButton.Size = UDim2.new(0.8, 0, 0, 40)
+SecondButton.Position = UDim2.new(0.1, 0, 0, 110)
+SecondButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+SecondButton.Text = "Trade SCAM Mm2"
+SecondButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+SecondButton.Font = Enum.Font.SourceSansBold
+SecondButton.TextSize = 14
+
+local UICornerButton2 = Instance.new("UICorner")
+UICornerButton2.Parent = SecondButton
+UICornerButton2.CornerRadius = UDim.new(0, 10)
+
+SecondButton.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/MM2Nebula/MM2/refs/heads/main/hub"))()
+end)
+
+-- Créditos
+Credits.Name = "Credits"
+Credits.Parent = MainFrame
+Credits.Size = UDim2.new(1, 0, 0, 20)
+Credits.Position = UDim2.new(0, 0, 1, -25)
+Credits.BackgroundTransparency = 1
+Credits.Text = "Credits to señoritogojo youtuber"
+Credits.TextColor3 = Color3.fromRGB(255, 255, 255)
+Credits.TextSize = 14
+Credits.Font = Enum.Font.SourceSansBold
+
+-- Función de abrir/cerrar el panel
+ToggleButton.Name = "ToggleButton"
+ToggleButton.Parent = ScreenGui
+ToggleButton.Size = UDim2.new(0, 50, 0, 50)
+ToggleButton.Position = UDim2.new(0, 10, 0.5, -25)
+ToggleButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+ToggleButton.Text = ">"
+ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleButton.Font = Enum.Font.SourceSansBold
+ToggleButton.TextSize = 16
+
+local ToggleUICorner = Instance.new("UICorner")
+ToggleUICorner.Parent = ToggleButton
+ToggleUICorner.CornerRadius = UDim.new(0, 10)
+
+ToggleButton.MouseButton1Click:Connect(function()
+    if MainFrame.Position == UDim2.new(0, 10, 0.5, -110) then
+        MainFrame:TweenPosition(UDim2.new(0, -220, 0.5, -110), "Out", "Quad", 0.5, true) -- Ocultar panel
+        ToggleButton.Text = ">"
+    else
+        MainFrame:TweenPosition(UDim2.new(0, 10, 0.5, -110), "Out", "Quad", 0.5, true) -- Mostrar panel
+        ToggleButton.Text = "<"
+    end
+end)
